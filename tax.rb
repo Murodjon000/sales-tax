@@ -32,7 +32,13 @@ class SalesTaxes
     def tax_cal(price,product)
       tax_exclude = []
       a_product = product.split(" ")
-      tax_exclude = a_product & TAX_EXEMPT_ITEM
+
+      a_product.each do |el|
+        if TAX_EXEMPT_ITEM.include?(el)
+          tax_exclude = a_product
+        end
+      end
+
       if product.include?("imported") and tax_exclude.length == 0
         tax = ((price * BOTH_TAX)*20).round/20.0
       elsif product.include?("imported") and tax_exclude.length != 0
